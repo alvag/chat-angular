@@ -12,7 +12,7 @@ export class WebsocketService {
 
     private chekStatus() {
         this.socket.on( 'connect', () => {
-            console.log( 'Conectado al servidor' );
+            console.log( 'Conectado al servidor!' );
         } );
 
         this.socket.on( 'disconnect', () => {
