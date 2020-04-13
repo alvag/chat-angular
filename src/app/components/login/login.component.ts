@@ -3,7 +3,6 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { UserService } from '../../services/user.service';
 import { finalize } from 'rxjs/operators';
-import { HttpErrorResponse } from '@angular/common/http';
 import { User } from '../../models/user.model';
 import { WebsocketService } from '../../services/websocket.service';
 import { Events } from '../../constants/constants';

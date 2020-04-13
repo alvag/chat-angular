@@ -14,6 +14,9 @@ import { AuthInterceptorService } from './services/auth-interceptor.service';
 import { UserService } from './services/user.service';
 import { WebsocketService } from './services/websocket.service';
 import { AuthGuard } from './guards/auth.guard';
+import { ChatService } from './services/chat.service';
+import { ReversePipe } from './pipes/reverse.pipe';
+import { ChatContentComponent } from './components/chat-content/chat-content.component';
 
 const token = localStorage.getItem( 'token' );
 const config: SocketIoConfig = { url: environment.wsUrl, options: { query: { token } } };
@@ -23,7 +26,9 @@ const config: SocketIoConfig = { url: environment.wsUrl, options: { query: { tok
         AppComponent,
         RegisterComponent,
         LoginComponent,
-        ChatComponent
+        ChatComponent,
+        ReversePipe,
+        ChatContentComponent
     ],
     imports: [
         BrowserModule,
@@ -36,6 +41,7 @@ const config: SocketIoConfig = { url: environment.wsUrl, options: { query: { tok
     providers: [
         UserService,
         WebsocketService,
+        ChatService,
         AuthGuard,
         {
             provide: HTTP_INTERCEPTORS, useClass: AuthInterceptorService, multi: true
