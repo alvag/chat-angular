@@ -4,8 +4,8 @@
 
 export const environment = {
     production: false,
-    wsUrl: 'http://localhost:3000',
-    apiUrl: 'http://localhost:3000/api',
+    wsUrl: 'https://chat.maxalva.com',
+    apiUrl: 'https://chat.maxalva.com/api',
 };
 
 /*

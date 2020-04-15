@@ -2,6 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { WebsocketService } from '../../services/websocket.service';
 import { UserService } from '../../services/user.service';
 import { Subscription } from 'rxjs';
+import Push from 'push.js';
 import { User } from '../../models/user.model';
 import { Events } from '../../constants/constants';
 import { Message } from '../../models/message.model';
@@ -31,6 +32,9 @@ export class ChatComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit() {
+
+        Push.Permission.request( () => {}, () => {} );
+
         this.userService.fetchUsers().then( ( users ) => {
             this.users = users;
 
@@ -61,6 +65,9 @@ export class ChatComponent implements OnInit, OnDestroy {
         this.subscriptions.push( this.wsService.listen( Events.SEND_MESSAGE )
         .subscribe( ( message: Message ) => {
             console.log( message );
+            if ( message.to._id === this.user._id ) {
+                this.showNotification( message );
+            }
             this.userService.updateMessages( message );
         } ) );
     }
@@ -87,6 +94,20 @@ export class ChatComponent implements OnInit, OnDestroy {
             this.checkMessages();
         }
 
+    }
+
+    showNotification( message: Message ) {
+        Push.create( `${message.from.name} dice:`, {
+            body: message.message,
+            icon: message.from.avatar,
+            timeout: 5000,
+            onClick: function() {
+                window.focus();
+                this.close();
+            }
+        } ).then( notification => {
+            console.log( notification );
+        } );
     }
 
 }
